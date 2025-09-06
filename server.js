@@ -414,7 +414,6 @@ try {
     process.exit(1); // Виходимо з помилкою
 }
 
-
 const states = {};
 
 // Визначення фаз для імітації поведінки ринку
@@ -539,8 +538,12 @@ async function updateData(gameId) {
             break;
     }
 
-    // Обмеження значення RTP в діапазоні від 10 до 95
-    newPrice = Math.max(10, Math.min(95, newPrice));
+    // Відштовхуємо значення від меж 10 і 95
+    if (newPrice >= 95) {
+        newPrice = 94 - getRandom(1, 3);
+    } else if (newPrice <= 10) {
+        newPrice = 11 + getRandom(1, 3);
+    }
 
     state.currentPrice = newPrice;
     state.prices.push(newPrice);
@@ -587,7 +590,6 @@ appExpress.get('/', (req, res) => {
 });
 appExpress.listen(PORT, () => {
     console.log(`Сервер працює на http://localhost:${PORT}`);
-
 });
 
 
