@@ -489,13 +489,13 @@ async function updateData(gameId) {
                 state.phaseDurationMinutes = getRandom(3, 5);
                 console.log(`Перехід ${gameId} до фази спаду.`);
             }
-            // Коливання в діапазоні 50-100
-            if (currentPrice > 90) {
-                 newPrice = currentPrice + getRandom(-3, 1);
+            // Коливання в діапазоні 50-100, з більшою волатильністю
+            if (currentPrice > 95) {
+                newPrice = currentPrice + getRandom(-3.0, -1.0); // Сильніший рух від краю
             } else if (currentPrice < 60) {
-                 newPrice = currentPrice + getRandom(0.5, 3);
+                newPrice = currentPrice + getRandom(1.0, 3.0); // Сильніший рух від краю
             } else {
-                 newPrice = currentPrice + getRandom(-2.5, 2.5);
+                newPrice = currentPrice + getRandom(-3.0, 3.0);
             }
             break;
         case PHASES.TRANSITION_DOWN:
@@ -506,7 +506,7 @@ async function updateData(gameId) {
                 console.log(`Перехід ${gameId} до фази низької стабільності.`);
             }
             // Випадкове, менш передбачуване зниження
-            newPrice = currentPrice - getRandom(1, 4);
+            newPrice = currentPrice - getRandom(2, 5);
             break;
         case PHASES.LOW_STABILITY:
             if (elapsedMinutes > phaseDurationMinutes) {
@@ -515,13 +515,13 @@ async function updateData(gameId) {
                 state.phaseDurationMinutes = getRandom(5, 15);
                 console.log(`Перехід ${gameId} до фази зростання.`);
             }
-            // Коливання в діапазоні 0-50
-            if (currentPrice < 10) {
-                newPrice = currentPrice + getRandom(1.5, 4);
+            // Коливання в діапазоні 0-50, з більшою волатильністю
+            if (currentPrice < 5) {
+                newPrice = currentPrice + getRandom(1.0, 3.0); // Сильніший рух від краю
             } else if (currentPrice > 40) {
-                newPrice = currentPrice + getRandom(-3, 0.5);
+                newPrice = currentPrice + getRandom(-3.0, -1.0); // Сильніший рух від краю
             } else {
-                newPrice = currentPrice + getRandom(-2.5, 2.5);
+                newPrice = currentPrice + getRandom(-3.0, 3.0);
             }
             break;
         case PHASES.TRANSITION_UP:
@@ -532,12 +532,12 @@ async function updateData(gameId) {
                 console.log(`Перехід ${gameId} до фази високої стабільності.`);
             }
             // Випадкове, менш передбачуване зростання
-            newPrice = currentPrice + getRandom(1, 4);
+            newPrice = currentPrice + getRandom(2, 5);
             break;
     }
 
-    // Обмеження значення RTP в діапазоні від 0 до 100
-    newPrice = Math.max(0, Math.min(100, newPrice));
+    // Обмеження значення RTP в діапазоні від 0 до 99.9
+    newPrice = Math.max(0.1, Math.min(99.9, newPrice));
 
     state.currentPrice = newPrice;
     state.prices.push(newPrice);
