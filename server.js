@@ -377,11 +377,8 @@
 
 // });
 
-
 import express from 'express';
-import http from 'http';
 import cors from 'cors';
-import admin from 'firebase-admin';
 import { initializeApp } from "firebase/app";
 import { getDatabase, ref, set } from "firebase/database";
 import { games } from "./games-data.js";
@@ -392,25 +389,6 @@ console.log("Починаю ініціалізацію генератора да
 process.on('unhandledRejection', (reason, promise) => {
     console.error('Виявлена необроблена помилка:', reason);
 });
-
-// Налаштування Firebase Admin
-try {
-    const serviceAccountJSON = process.env.FIREBASE_SERVICE_ACCOUNT_KEY;
-    if (!serviceAccountJSON) {
-        console.error("Помилка: Не знайдено змінну середовища FIREBASE_SERVICE_ACCOUNT_KEY.");
-        process.exit(1);
-    }
-    const serviceAccount = JSON.parse(serviceAccountJSON);
-
-    admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount),
-        databaseURL: "https://analizatot-slots-default-rtdb.europe-west1.firebasedatabase.app/"
-    });
-    console.log("Firebase Admin успішно ініціалізовано.");
-} catch (error) {
-    console.error("Помилка під час ініціалізації Firebase Admin:", error);
-    process.exit(1);
-}
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -572,3 +550,5 @@ appExpress.listen(PORT, () => {
     console.log(`Сервер працює на http://localhost:${PORT}`);
 
 });
+
+
