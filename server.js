@@ -494,9 +494,9 @@ async function updateData(gameId) {
             }
             // Коливання в діапазоні 60-95
             if (currentPrice > 90) {
-                newPrice = currentPrice + getRandom(-4.0, -1.0); // Сильніший рух від краю
+                newPrice = currentPrice + getRandom(-5.0, -1.0); // Сильніший рух від краю
             } else if (currentPrice < 60) {
-                newPrice = currentPrice + getRandom(1.0, 4.0); // Сильніший рух від краю
+                newPrice = currentPrice + getRandom(1.0, 5.0); // Сильніший рух від краю
             } else {
                 newPrice = currentPrice + getRandom(-4.0, 4.0);
             }
@@ -589,5 +589,7 @@ appExpress.listen(PORT, () => {
     console.log(`Сервер працює на http://localhost:${PORT}`);
 
 });
+
+
 
 
