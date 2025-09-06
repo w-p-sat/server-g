@@ -421,6 +421,7 @@ const PHASES = {
     LOW_STABILITY: 'low_stability',
     TRANSITION_UP: 'transition_up'
 };
+const PHASE_KEYS = Object.keys(PHASES);
 
 // --- Справжня випадкова функція ---
 function getRandom(min, max) {
@@ -432,6 +433,30 @@ async function updateData(gameId) {
     let state = states[gameId];
     if (!state) {
         // Ініціалізуємо новий стан, якщо його не існує
+        const randomPhaseIndex = Math.floor(Math.random() * PHASE_KEYS.length);
+        const initialPhase = PHASES[PHASE_KEYS[randomPhaseIndex]];
+        let initialPrice;
+        let initialDuration;
+
+        switch (initialPhase) {
+            case PHASES.HIGH_STABILITY:
+                initialPrice = getRandom(60, 95);
+                initialDuration = getRandom(20, 60);
+                break;
+            case PHASES.TRANSITION_DOWN:
+                initialPrice = getRandom(60, 95);
+                initialDuration = getRandom(3, 5);
+                break;
+            case PHASES.LOW_STABILITY:
+                initialPrice = getRandom(10, 40);
+                initialDuration = getRandom(12, 30);
+                break;
+            case PHASES.TRANSITION_UP:
+                initialPrice = getRandom(10, 40);
+                initialDuration = getRandom(5, 15);
+                break;
+        }
+
         state = {
             prices: [],
             maxPoints: 50,
@@ -440,10 +465,10 @@ async function updateData(gameId) {
             lastBigWinTime: '--',
             activePlayersValue: 0,
             lastJackpotTime: '--',
-            currentPrice: getRandom(10, 95),
-            phase: PHASES.HIGH_STABILITY,
+            currentPrice: initialPrice,
+            phase: initialPhase,
             phaseStartTime: Date.now(),
-            phaseDurationMinutes: getRandom(20, 60)
+            phaseDurationMinutes: initialDuration
         };
         states[gameId] = state;
     }
