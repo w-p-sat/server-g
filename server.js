@@ -376,6 +376,10 @@
 //     console.log(`Сервер працює на http://localhost:${PORT}`);
 
 // });
+
+
+
+
 import express from 'express';
 import cors from 'cors';
 import { initializeApp } from "firebase/app";
@@ -515,7 +519,7 @@ async function updateData(gameId) {
                 state.phaseDurationMinutes = getRandom(5, 15);
                 console.log(`Перехід ${gameId} до фази зростання.`);
             }
-            // Коливання в діапазоні 0-50, з більшою волатильністю
+            // Коливання в діапазоні 10-50, з більшою волатильністю
             if (currentPrice < 15) {
                 newPrice = currentPrice + getRandom(1.0, 4.0); // Сильніший рух від краю
             } else if (currentPrice > 40) {
