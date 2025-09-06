@@ -516,7 +516,7 @@ async function updateData(gameId) {
                 console.log(`Перехід ${gameId} до фази зростання.`);
             }
             // Коливання в діапазоні 0-50, з більшою волатильністю
-            if (currentPrice < 5) {
+            if (currentPrice < 15) {
                 newPrice = currentPrice + getRandom(1.0, 4.0); // Сильніший рух від краю
             } else if (currentPrice > 40) {
                 newPrice = currentPrice + getRandom(-4.0, -1.0); // Сильніший рух від краю
@@ -536,8 +536,8 @@ async function updateData(gameId) {
             break;
     }
 
-    // Обмеження значення RTP в діапазоні від 0.1 до 99.9
-    newPrice = Math.max(0.1, Math.min(99.9, newPrice));
+    // Обмеження значення RTP в діапазоні від 10 до 95
+    newPrice = Math.max(10, Math.min(95, newPrice));
 
     state.currentPrice = newPrice;
     state.prices.push(newPrice);
