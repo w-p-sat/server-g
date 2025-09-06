@@ -376,7 +376,6 @@
 //     console.log(`Сервер працює на http://localhost:${PORT}`);
 
 // });
-
 import express from 'express';
 import cors from 'cors';
 import { initializeApp } from "firebase/app";
@@ -462,23 +461,23 @@ async function updateData(gameId) {
             if (elapsedMinutes > phaseDurationMinutes) {
                 state.phase = PHASES.TRANSITION_DOWN;
                 state.phaseStartTime = now;
-                state.phaseDurationMinutes = getRandom(3, 5); // Змінено
+                state.phaseDurationMinutes = getRandom(3, 5);
                 console.log(`Перехід ${gameId} до фази спаду.`);
             }
             // Коливання в діапазоні 50-100
             if (currentPrice > 90) {
-                 newPrice = currentPrice + getRandom(-2, 1);
+                 newPrice = currentPrice + getRandom(-3, 1);
             } else if (currentPrice < 60) {
-                 newPrice = currentPrice + getRandom(0.5, 1.5);
+                 newPrice = currentPrice + getRandom(0.5, 3);
             } else {
-                 newPrice = currentPrice + getRandom(-0.5, 0.5);
+                 newPrice = currentPrice + getRandom(-2.5, 2.5);
             }
             break;
         case PHASES.TRANSITION_DOWN:
             if (elapsedMinutes > phaseDurationMinutes) {
                 state.phase = PHASES.LOW_STABILITY;
                 state.phaseStartTime = now;
-                state.phaseDurationMinutes = getRandom(12, 30); // Змінено
+                state.phaseDurationMinutes = getRandom(12, 30);
                 console.log(`Перехід ${gameId} до фази низької стабільності.`);
             }
             // Випадкове, менш передбачуване зниження
@@ -493,11 +492,11 @@ async function updateData(gameId) {
             }
             // Коливання в діапазоні 0-50
             if (currentPrice < 10) {
-                newPrice = currentPrice + getRandom(1, 2);
+                newPrice = currentPrice + getRandom(1.5, 4);
             } else if (currentPrice > 40) {
-                newPrice = currentPrice + getRandom(-1.5, 0.5);
+                newPrice = currentPrice + getRandom(-3, 0.5);
             } else {
-                newPrice = currentPrice + getRandom(-0.5, 0.5);
+                newPrice = currentPrice + getRandom(-2.5, 2.5);
             }
             break;
         case PHASES.TRANSITION_UP:
